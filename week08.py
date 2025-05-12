@@ -13,7 +13,6 @@ def pre_order(node): # 전위처리 방법 P L R
     pre_order(node.left)
     pre_order(node.right)
 
-
 def post_order(node): # 후위처리 방법  L R P
     if node is None:
         return
@@ -47,6 +46,8 @@ def insert(root, value):  # 여기서 노드를 만들고 처리 한다.
                 break
             current = current.right
     return root
+
+#def search(찾고자하는 매개변수 1개) # search 함수를 만들 수 있다.
 
 # 이진탐색 트리 : BST
 if __name__ == "__main__":
