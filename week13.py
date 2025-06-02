@@ -82,3 +82,7 @@ for c, s, e in mst_edges:
 print('MST 도로 연결도')
 print_graph(mst_graph)
 print(f"최소 비용 :  {mst_cost}")
+
+print('\nMST 도로 상황(정방향 / 서로소 집합 자료구조 / 최소신장트리 / 크루스칼 알고리즘)')
+for c, s, e in mst_edges:
+    print(f"{cities[s]} --- {cities[e]} : {c}")
