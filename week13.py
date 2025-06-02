@@ -14,35 +14,16 @@ def print_graph(g) :
 		print()
 	print()
 
-def find_vertex(g, city) :
-	stack = list()
-	visited_cities = list()
+def dfs(g, current, visited):
+    visited.append(current)
+    for vertex in range(graph_size):
+        if g.graph[current][vertex] > 0 and vertex not in visited:
+            dfs(g, vertex, visited)
 
-	i = 0
-	stack.append(i)
-	visited_cities.append(i)
-
-	while stack:
-		next = None
-		for j in range(graph_size):
-			if g.graph[i][j] != 0:
-				if j in visited_cities:
-					pass
-				else:
-					next = j
-					break
-
-		if next is not None:
-			i = next
-			stack.append(i)
-			visited_cities.append(i)
-		else :
-			i = stack.pop()
-
-	if city in visited_cities:
-		return True
-	else :
-		return False
+def find_vertex(g, city):
+    visited_cities = list()
+    dfs(g, 0, visited_cities)
+    return city in visited_cities
 
 
 g1 = None
@@ -64,9 +45,9 @@ print_graph(g1)
 
 edges = list()
 for i in range(graph_size) :
-	for j in range(graph_size) :
-		if g1.graph[i][j] != 0 :
-			edges.append([g1.graph[i][j], i, j])
+    for j in range(graph_size) :
+        if g1.graph[i][j] != 0 :
+            edges.append([g1.graph[i][j], i, j])
 print(edges)
 
 edges.sort(reverse=True)
@@ -74,27 +55,27 @@ print(edges)
 
 new_ary = list()
 for i in range(1, len(edges), 2):
-	new_ary.append(edges[i])
+    new_ary.append(edges[i])
 print(new_ary)
 
 index = 0
 while len(new_ary) > graph_size - 1:
-	start = new_ary[index][1]
-	end = new_ary[index][2]
-	save_cost = new_ary[index][0]
+    start = new_ary[index][1]
+    end = new_ary[index][2]
+    save_cost = new_ary[index][0]
 
-	g1.graph[start][end] = 0
-	g1.graph[end][start] = 0
+    g1.graph[start][end] = 0
+    g1.graph[end][start] = 0
 
-	start_reachable = find_vertex(g1, start)
-	end_reachable = find_vertex(g1, end)
+    start_reachable = find_vertex(g1, start)
+    end_reachable = find_vertex(g1, end)
 
-	if start_reachable and end_reachable :
-		del new_ary[index]
-	else:
-		g1.graph[start][end] = save_cost
-		g1.graph[end][start] = save_cost
-		index = index + 1
+    if start_reachable and end_reachable :
+        del new_ary[index]
+    else:
+        g1.graph[start][end] = save_cost
+        g1.graph[end][start] = save_cost
+        index = index + 1
 
 print('MST 도로 연결도')
 print_graph(g1)
